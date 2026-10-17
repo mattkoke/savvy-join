@@ -192,7 +192,7 @@
           Open in Savvy Password Manager
         </a>
 
-        <a id="download-btn" class="btn btn-secondary" href="https://github.com/CHANGE-ME/savvy-password-manager/releases/latest" target="_blank" rel="noopener">
+        <a id="download-btn" class="btn btn-secondary" href="https://github.com/mattkoke/savvy-password-manager/releases/latest" target="_blank" rel="noopener">
           Download the App
         </a>
 
@@ -222,7 +222,7 @@
         </div>
         <h1>Invalid Invite Link</h1>
         <p class="subtitle">This link is missing or malformed. Ask your administrator to send you a new invite.</p>
-        <a id="download-btn-error" class="btn btn-secondary" href="https://github.com/CHANGE-ME/savvy-password-manager/releases/latest" target="_blank" rel="noopener">
+        <a id="download-btn-error" class="btn btn-secondary" href="https://github.com/mattkoke/savvy-password-manager/releases/latest" target="_blank" rel="noopener">
           Download Savvy Password Manager
         </a>
       </div>
@@ -236,23 +236,26 @@
 
   <script>
     (function () {
-      var hash = window.location.hash.slice(1)
-      if (!hash || hash.indexOf(':') === -1) {
+      var segments = window.location.pathname.split('/').filter(Boolean)
+      // Remove the repo name prefix (savvy-join)
+      if (segments[0] === 'savvy-join') segments.shift()
+
+      if (segments.length < 2) {
         document.getElementById('invalid-invite').style.display = 'block'
         return
       }
 
       document.getElementById('valid-invite').style.display = 'block'
 
-      var parts = hash.split(':')
-      var invitationId = parts[0]
-      var inviteKey = parts.slice(1).join(':')
+      var invitationId = segments[0]
+      var inviteKey = segments[1]
+      var inviteCode = invitationId + ':' + inviteKey
 
-      document.getElementById('invite-code').textContent = hash
+      document.getElementById('invite-code').textContent = inviteCode
       document.getElementById('open-btn').href = 'savvypwd://join/' + invitationId + '#' + inviteKey
 
       document.getElementById('copy-btn').addEventListener('click', function () {
-        navigator.clipboard.writeText(hash).then(function () {
+        navigator.clipboard.writeText(inviteCode).then(function () {
           document.getElementById('copy-btn').title = 'Copied!'
           setTimeout(function () {
             document.getElementById('copy-btn').title = 'Copy to clipboard'
