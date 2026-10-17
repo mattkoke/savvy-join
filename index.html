@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join — Savvy Password Manager</title>
+  <style>
+    :root {
+      --bg: #1a1a2e;
+      --card-bg: #16213e;
+      --accent: #c0392b;
+      --accent-hover: #e74c3c;
+      --text: #f0f0f0;
+      --text-muted: #8899aa;
+      --border: #2a3a5e;
+      --code-bg: #0f1629;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .container {
+      max-width: 480px;
+      width: 100%;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px 32px;
+      text-align: center;
+    }
+
+    .logo {
+      width: 64px;
+      height: 64px;
+      background: var(--accent);
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .logo svg { width: 36px; height: 36px; fill: white; }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 15px;
+      margin-bottom: 32px;
+      line-height: 1.5;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 14px 24px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s, transform 0.1s;
+      margin-bottom: 12px;
+    }
+
+    .btn:active { transform: scale(0.98); }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-primary:hover { background: var(--accent-hover); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover { background: rgba(255,255,255,0.05); }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 20px 0;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .code-section {
+      text-align: left;
+      margin-top: 20px;
+    }
+
+    .code-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .code-box {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-family: 'SF Mono', 'Cascadia Code', 'Consolas', monospace;
+      font-size: 12px;
+      word-break: break-all;
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .code-text { flex: 1; }
+
+    .copy-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 2px;
+      flex-shrink: 0;
+    }
+
+    .copy-btn:hover { color: var(--text); }
+
+    .error-card {
+      background: var(--card-bg);
+      border: 1px solid var(--accent);
+      border-radius: 16px;
+      padding: 40px 32px;
+      text-align: center;
+    }
+
+    .error-card h1 { color: var(--accent); }
+
+    .footer {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    #valid-invite, #invalid-invite { display: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div id="valid-invite">
+      <div class="card">
+        <div class="logo">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 1C8.676 1 6 3.676 6 7v2H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V10a1 1 0 0 0-1-1h-2V7c0-3.324-2.676-6-6-6zm0 2c2.276 0 4 1.724 4 4v2H8V7c0-2.276 1.724-4 4-4zm0 10a2 2 0 0 1 1 3.732V18a1 1 0 1 1-2 0v-1.268A2 2 0 0 1 12 13z"/>
+          </svg>
+        </div>
+        <h1>You've been invited</h1>
+        <p class="subtitle">Someone has invited you to join their organisation on Savvy Password Manager.</p>
+
+        <a id="open-btn" class="btn btn-primary" href="#">
+          Open in Savvy Password Manager
+        </a>
+
+        <a id="download-btn" class="btn btn-secondary" href="https://github.com/CHANGE-ME/savvy-password-manager/releases/latest" target="_blank" rel="noopener">
+          Download the App
+        </a>
+
+        <div class="divider">or paste this code manually</div>
+
+        <div class="code-section">
+          <div class="code-label">Invite Code</div>
+          <div class="code-box">
+            <span class="code-text" id="invite-code"></span>
+            <button class="copy-btn" id="copy-btn" title="Copy to clipboard">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M4 2a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H6z"/>
+                <path d="M2 5a1 1 0 0 0-1 1v8a2 2 0 0 0 2 2h6a1 1 0 1 0 0-2H3V6a1 1 0 0 0-1-1z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="invalid-invite">
+      <div class="error-card">
+        <div class="logo">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 1C8.676 1 6 3.676 6 7v2H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V10a1 1 0 0 0-1-1h-2V7c0-3.324-2.676-6-6-6zm0 2c2.276 0 4 1.724 4 4v2H8V7c0-2.276 1.724-4 4-4zm0 10a2 2 0 0 1 1 3.732V18a1 1 0 1 1-2 0v-1.268A2 2 0 0 1 12 13z"/>
+          </svg>
+        </div>
+        <h1>Invalid Invite Link</h1>
+        <p class="subtitle">This link is missing or malformed. Ask your administrator to send you a new invite.</p>
+        <a id="download-btn-error" class="btn btn-secondary" href="https://github.com/CHANGE-ME/savvy-password-manager/releases/latest" target="_blank" rel="noopener">
+          Download Savvy Password Manager
+        </a>
+      </div>
+    </div>
+
+    <div class="footer">
+      Savvy Password Manager &mdash; by IT Savvy
+    </div>
+
+  </div>
+
+  <script>
+    (function () {
+      var hash = window.location.hash.slice(1)
+      if (!hash || hash.indexOf(':') === -1) {
+        document.getElementById('invalid-invite').style.display = 'block'
+        return
+      }
+
+      document.getElementById('valid-invite').style.display = 'block'
+
+      var parts = hash.split(':')
+      var invitationId = parts[0]
+      var inviteKey = parts.slice(1).join(':')
+
+      document.getElementById('invite-code').textContent = hash
+      document.getElementById('open-btn').href = 'savvypwd://join/' + invitationId + '#' + inviteKey
+
+      document.getElementById('copy-btn').addEventListener('click', function () {
+        navigator.clipboard.writeText(hash).then(function () {
+          document.getElementById('copy-btn').title = 'Copied!'
+          setTimeout(function () {
+            document.getElementById('copy-btn').title = 'Copy to clipboard'
+          }, 2000)
+        })
+      })
+    })()
+  </script>
+</body>
+</html>
